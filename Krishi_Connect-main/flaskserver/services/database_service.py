@@ -28,6 +28,8 @@ class FieldMapService:
                 coordinates=field_data.get('coordinates'),
                 area=field_data.get('area'),
                 soil_type=field_data.get('soil_type'),
+                location=field_data.get('location'),
+                current_crop=field_data.get('current_crop'),
                 elevation=field_data.get('elevation'),
                 slope=field_data.get('slope'),
                 drainage=field_data.get('drainage'),
