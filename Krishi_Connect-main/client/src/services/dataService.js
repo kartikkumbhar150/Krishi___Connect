@@ -1,6 +1,50 @@
 import { parseCSV } from '../utils/dataUtils';
 import { API_URLS } from '../config';
 
+const extractErrorMessage = (errorData, response) => {
+  if (!errorData) return `HTTP ${response.status}: ${response.statusText}`;
+  if (typeof errorData.error === 'string') return errorData.error;
+  if (typeof errorData.message === 'string') return errorData.message;
+  if (errorData.error?.message) return errorData.error.message;
+  return `HTTP ${response.status}: ${response.statusText}`;
+};
+
+export const normalizeField = (field) => ({
+  id: field?._id || field?.id,
+  _id: field?._id || field?.id,
+  name: field?.field_name || field?.name || '',
+  field_name: field?.field_name || field?.name || '',
+  location: field?.location || field?.field_name || 'Unknown',
+  crop: field?.current_crop || field?.crop || 'Not specified',
+  current_crop: field?.current_crop || field?.crop || 'Not specified',
+  area: Number(field?.area || 0),
+  soilType: field?.soil_type || field?.soilType || 'Unknown',
+  soil_type: field?.soil_type || field?.soilType || 'Unknown',
+  status: (field?.status || 'active').toLowerCase(),
+  createdAt: field?.created_at || field?.createdAt,
+  created_at: field?.created_at || field?.createdAt,
+  coordinates: Array.isArray(field?.coordinates) ? field.coordinates : [],
+  soil_parameters: field?.soil_parameters || {},
+  weather_data: field?.weather_data || {}
+});
+
+export const normalizeCrop = (crop) => ({
+  id: crop?._id || crop?.id,
+  _id: crop?._id || crop?.id,
+  field_id: crop?.field_id,
+  crop_name: crop?.crop_name || crop?.name || '',
+  crop_variety: crop?.crop_variety || '',
+  sowing_date: crop?.sowing_date,
+  expected_harvest_date: crop?.expected_harvest_date,
+  current_stage: crop?.current_stage || 'seeded',
+  growth_stages: Array.isArray(crop?.growth_stages) ? crop.growth_stages : [],
+  irrigation: crop?.irrigation || { schedule: [], total_water_used: 0, irrigation_method: 'manual' },
+  fertilizer: crop?.fertilizer || { schedule: [], total_nitrogen: 0, total_phosphorus: 0, total_potassium: 0 },
+  status: crop?.status || 'active',
+  created_at: crop?.created_at
+});
+
+
 // This service handles all API calls to the Flask backend
 
 // Generic API call function with error handling
@@ -16,7 +60,7 @@ const apiCall = async (url, options = {}) => {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      const errorMessage = errorData.error || `HTTP ${response.status}: ${response.statusText}`;
+      const errorMessage = extractErrorMessage(errorData, response);
       console.error(`API Error (${response.status}):`, errorMessage);
       throw new Error(errorMessage);
     }

@@ -18,6 +18,8 @@ class FieldMapSchema:
             "field_name": field_name,
             "coordinates": coordinates,  # Array of lat/lng objects
             "area": area,  # Area in hectares/acres
+            "location": kwargs.get('location'),
+            "current_crop": kwargs.get('current_crop'),
             "soil_type": soil_type,
             "elevation": kwargs.get('elevation'),
             "slope": kwargs.get('slope'),
@@ -51,8 +53,14 @@ class FieldMapSchema:
             update_data['coordinates'] = kwargs['coordinates']
         if 'area' in kwargs:
             update_data['area'] = kwargs['area']
+        if 'location' in kwargs:
+            update_data['location'] = kwargs['location']
+        if 'current_crop' in kwargs:
+            update_data['current_crop'] = kwargs['current_crop']
         if 'soil_type' in kwargs:
             update_data['soil_type'] = kwargs['soil_type']
+        if 'status' in kwargs:
+            update_data['status'] = kwargs['status'].lower() if isinstance(kwargs['status'], str) else kwargs['status']
             
         # Update soil parameters
         soil_params = {}

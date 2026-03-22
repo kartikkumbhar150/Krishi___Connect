@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMap, faArrowLeft, faEdit, faTrash, faSpinner, faExclamationTriangle, faSeedling } from '@fortawesome/free-solid-svg-icons';
-import { API_URLS } from '../config';
+import { deleteField, fetchFieldData } from '../services/dataService';
 import googleMapsLoader from '../utils/googleMapsLoader';
 import '../components/fields/Fields.css';
 
@@ -24,18 +24,8 @@ const FieldDetail = () => {
     setError(null);
 
     try {
-      const response = await fetch(`${API_URLS.FIELDS}/${id}`);
-      
-      if (!response.ok) {
-        throw new Error(`Failed to fetch field details: ${response.status} ${response.statusText}`);
-      }
-
-      const result = await response.json();
-      if (result.success && result.field) {
-        setField(result.field);
-      } else {
-        setError('Field not found or invalid server response');
-      }
+      const result = await fetchFieldData(id);
+      setField(result);
     } catch (error) {
       console.error('Error fetching field details:', error);
       setError(`Failed to load field details: ${error.message}`);
@@ -166,7 +156,7 @@ const FieldDetail = () => {
                   onClick={() => {
                     if (confirm('Are you sure you want to delete this field?')) {
                       // Implement delete functionality here
-                      window.location.href = '/field-list';
+                      deleteField(id).then(() => { window.location.href = '/field-list'; }).catch((err) => setError(`Failed to delete field: ${err.message}`));
                     }
                   }}
                 >
