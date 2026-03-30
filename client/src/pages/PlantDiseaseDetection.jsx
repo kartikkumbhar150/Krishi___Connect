@@ -40,7 +40,7 @@ const PlantDiseaseDetection = () => {
         };
         reader.readAsDataURL(file);
       } else {
-        setError('Please select a valid image file (PNG, JPG, JPEG)');
+        setError(t('pages.plantDiseaseDetection.supportedFormats'));
       }
     }
   };
@@ -70,11 +70,11 @@ const PlantDiseaseDetection = () => {
   // Upload and analyze image
   const handleUpload = async () => {
     if (!selectedFile) {
-      setError('Please select an image first');
+      setError(t('pages.plantDiseaseDetection.noImageError'));
       return;
     }
     if (!plantName.trim()) {
-      setError('Please enter the plant name');
+      setError(t('pages.plantDiseaseDetection.noPlantError'));
       return;
     }
 
@@ -95,7 +95,7 @@ const PlantDiseaseDetection = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to upload image');
+        throw new Error(t('pages.plantDiseaseDetection.uploadError'));
       }
 
       const result = await response.json();
@@ -106,9 +106,9 @@ const PlantDiseaseDetection = () => {
         setResultImage(config.API_URLS.DISEASE_IMAGE_RESULT(result.resultImagePath) + `?t=${timestamp}`);
 
         setDiseaseInfo(result.diseaseInfo || {
-          name: 'Analysis Complete',
-          description: 'Disease detection analysis has been completed.',
-          treatment: 'Please check the result image for detailed analysis. Consult with an agricultural expert for specific treatment recommendations.',
+          name: t('pages.plantDiseaseDetection.analysisResult'),
+          description: t('pages.plantDiseaseDetection.analysisResult'),
+          treatment: t('pages.plantDiseaseDetection.recommendedTreatment'),
           confidence: result.confidence || 'N/A'
         });
 
@@ -117,11 +117,11 @@ const PlantDiseaseDetection = () => {
         setPreviewUrl(null);
         if (fileInputRef.current) fileInputRef.current.value = '';
       } else {
-        setError(result.message || 'Failed to analyze the image');
+        setError(result.message || t('pages.plantDiseaseDetection.analysisError'));
       }
     } catch (err) {
       console.error('Upload error:', err);
-      setError('Failed to upload and analyze the image. Please try again.');
+      setError(t('pages.plantDiseaseDetection.analysisError'));
     } finally {
       setIsUploading(false);
     }
@@ -150,8 +150,8 @@ const PlantDiseaseDetection = () => {
               <FontAwesomeIcon icon={faLeaf} className="text-2xl" />
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Plant Disease Detection</h1>
-          <p className="text-gray-600">Upload an image of a plant leaf to detect diseases and get treatment recommendations</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('pages.plantDiseaseDetection.title')}</h1>
+          <p className="text-gray-600">{t('pages.plantDiseaseDetection.subtitle')}</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -159,7 +159,7 @@ const PlantDiseaseDetection = () => {
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
               <FontAwesomeIcon icon={faUpload} className="mr-2 text-green-600" />
-              Upload Leaf Image & Plant Name
+              {t('pages.plantDiseaseDetection.uploadSection')}
             </h2>
 
             {/* Drag and Drop Area */}
@@ -175,27 +175,27 @@ const PlantDiseaseDetection = () => {
                 <div className="space-y-4">
                   <img
                     src={previewUrl}
-                    alt="Selected leaf"
+                    alt={t('pages.plantDiseaseDetection.uploadSection')}
                     className="max-h-48 mx-auto rounded-lg shadow-md"
                   />
                   <div className="text-sm text-gray-600">
                     <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 mr-1" />
-                    Image selected: {selectedFile?.name}
+                    {t('pages.plantDiseaseDetection.analysisResult')}: {selectedFile?.name}
                   </div>
                 </div>
               ) : (
                 <div className="space-y-4">
                   <FontAwesomeIcon icon={faImage} className="text-4xl text-gray-400" />
                   <div>
-                    <p className="text-gray-600">Drag and drop your leaf image here, or</p>
+                    <p className="text-gray-600">{t('pages.plantDiseaseDetection.dragDrop')}</p>
                     <button
                       onClick={() => fileInputRef.current?.click()}
                       className="text-green-600 hover:text-green-700 font-medium"
                     >
-                      click to browse
+                      {t('pages.plantDiseaseDetection.clickBrowse')}
                     </button>
                   </div>
-                  <p className="text-xs text-gray-500">Supports PNG, JPG, JPEG files</p>
+                  <p className="text-xs text-gray-500">{t('pages.plantDiseaseDetection.supportedFormats')}</p>
                 </div>
               )}
             </div>
@@ -216,9 +216,9 @@ const PlantDiseaseDetection = () => {
               onChange={e => setPlantName(e.target.value)}
               className="w-full border border-gray-300 rounded px-3 py-2 mt-4 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900"
             >
-              <option value="">Select plant</option>
-              <option value="tea">Tea</option>
-              <option value="tomato">Tomato</option>
+              <option value="">{t('pages.plantDiseaseDetection.selectPlant')}</option>
+              <option value="tea">{t('pages.plantDiseaseDetection.tea')}</option>
+              <option value="tomato">{t('pages.plantDiseaseDetection.tomato')}</option>
             </select>
 
 
@@ -232,12 +232,12 @@ const PlantDiseaseDetection = () => {
                 {isUploading ? (
                   <>
                     <FontAwesomeIcon icon={faSpinner} className="animate-spin mr-2" />
-                    Analyzing...
+                    {t('pages.plantDiseaseDetection.analyzing')}
                   </>
                 ) : (
                   <>
                     <FontAwesomeIcon icon={faEye} className="mr-2" />
-                    Detect Disease
+                    {t('pages.plantDiseaseDetection.detectDisease')}
                   </>
                 )}
               </button>
@@ -245,7 +245,7 @@ const PlantDiseaseDetection = () => {
                 onClick={handleReset}
                 className="px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
               >
-                Reset
+                {t('pages.plantDiseaseDetection.reset')}
               </button>
             </div>
 
@@ -264,25 +264,25 @@ const PlantDiseaseDetection = () => {
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
               <FontAwesomeIcon icon={faEye} className="mr-2 text-blue-600" />
-              Detection Results
+              {t('pages.plantDiseaseDetection.detectionResults')}
             </h2>
 
             {!resultImage && !diseaseInfo ? (
               <div className="text-center py-12 text-gray-500">
                 <FontAwesomeIcon icon={faLeaf} className="text-4xl mb-4 opacity-50" />
-                <p>Upload an image to see detection results</p>
+                <p>{t('pages.plantDiseaseDetection.uploadPrompt')}</p>
               </div>
             ) : (
               <div className="space-y-6">
                 {resultImage && (
                   <div>
-                    <h3 className="text-lg font-medium text-gray-800 mb-3">Analysis Result</h3>
+                    <h3 className="text-lg font-medium text-gray-800 mb-3">{t('pages.plantDiseaseDetection.analysisResult')}</h3>
                     <div className="border border-gray-200 rounded-lg overflow-hidden">
                       <img
                         src={resultImage}
-                        alt="Disease detection result"
+                        alt={t('pages.plantDiseaseDetection.detectionResults')}
                         className="w-full h-auto"
-                        onError={() => setError('Failed to load result image')}
+                        onError={() => setError(t('pages.plantDiseaseDetection.failedToLoadResult'))}
                       />
                     </div>
                   </div>
@@ -292,29 +292,29 @@ const PlantDiseaseDetection = () => {
                   <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6">
                     <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
                       <FontAwesomeIcon icon={faMedkit} className="mr-2 text-blue-600" />
-                      Disease Information & Treatment
+                      {t('pages.plantDiseaseDetection.diseaseInfo')}
                     </h3>
 
                     <div className="space-y-4">
                       <div>
-                        <h4 className="font-medium text-gray-800">Detected Condition:</h4>
+                        <h4 className="font-medium text-gray-800">{t('pages.plantDiseaseDetection.detectedCondition')}</h4>
                         <p className="text-gray-700">{diseaseInfo.name}</p>
                       </div>
 
                       {diseaseInfo.confidence && (
                         <div>
-                          <h4 className="font-medium text-gray-800">Confidence Level:</h4>
+                          <h4 className="font-medium text-gray-800">{t('pages.plantDiseaseDetection.confidenceLevel')}</h4>
                           <p className="text-gray-700">{diseaseInfo.confidence}</p>
                         </div>
                       )}
 
                       <div>
-                        <h4 className="font-medium text-gray-800">Description:</h4>
+                        <h4 className="font-medium text-gray-800">{t('pages.plantDiseaseDetection.description')}</h4>
                         <p className="text-gray-700">{diseaseInfo.description}</p>
                       </div>
 
                       <div>
-                        <h4 className="font-medium text-gray-800">Recommended Treatment:</h4>
+                        <h4 className="font-medium text-gray-800">{t('pages.plantDiseaseDetection.recommendedTreatment')}</h4>
                         <p className="text-gray-700">{diseaseInfo.treatment}</p>
                       </div>
                     </div>
@@ -327,28 +327,28 @@ const PlantDiseaseDetection = () => {
 
         {/* Additional Information */}
         <div className="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">How it Works</h3>
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">{t('pages.plantDiseaseDetection.howItWorks')}</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center">
               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
                 <FontAwesomeIcon icon={faUpload} className="text-green-600" />
               </div>
-              <h4 className="font-medium text-gray-800 mb-2">1. Upload Image</h4>
-              <p className="text-sm text-gray-600">Upload a clear image of the affected plant leaf</p>
+              <h4 className="font-medium text-gray-800 mb-2">{t('pages.plantDiseaseDetection.step1')}</h4>
+              <p className="text-sm text-gray-600">{t('pages.plantDiseaseDetection.step1Desc')}</p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
                 <FontAwesomeIcon icon={faEye} className="text-blue-600" />
               </div>
-              <h4 className="font-medium text-gray-800 mb-2">2. AI Analysis</h4>
-              <p className="text-sm text-gray-600">Our AI model analyzes the image for disease detection</p>
+              <h4 className="font-medium text-gray-800 mb-2">{t('pages.plantDiseaseDetection.step2')}</h4>
+              <p className="text-sm text-gray-600">{t('pages.plantDiseaseDetection.step2Desc')}</p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
                 <FontAwesomeIcon icon={faMedkit} className="text-purple-600" />
               </div>
-              <h4 className="font-medium text-gray-800 mb-2">3. Get Results</h4>
-              <p className="text-sm text-gray-600">Receive detailed analysis and treatment recommendations</p>
+              <h4 className="font-medium text-gray-800 mb-2">{t('pages.plantDiseaseDetection.step3')}</h4>
+              <p className="text-sm text-gray-600">{t('pages.plantDiseaseDetection.step3Desc')}</p>
             </div>
           </div>
         </div>

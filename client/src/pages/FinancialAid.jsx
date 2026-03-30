@@ -32,31 +32,31 @@ const FinancialAid = () => {
   const tabs = [
     {
       id: 'schemes',
-      label: t('pages.financialAid.governmentSchemes'),
+      label: t('pages.financialAid.governmentSchemes', { defaultValue: 'Government Schemes' }),
       icon: faHandshake,
       component: SchemeEligibilityRecommender
     },
     {
       id: 'loans',
-      label: t('pages.financialAid.banksLoans'),
+      label: t('pages.financialAid.banksLoans', { defaultValue: 'Banks & Loans' }),
       icon: faUniversity,
       component: LoanBankFinder
     },
     {
       id: 'subsidies',
-      label: t('pages.financialAid.subsidiesFreebies'),
+      label: t('pages.financialAid.subsidiesFreebies', { defaultValue: 'Subsidies & Freebies' }),
       icon: faGift,
       component: SubsidiesFreebies
     },
     {
       id: 'notifications',
-      label: t('pages.financialAid.notifications'),
+      label: t('pages.financialAid.notifications', { defaultValue: 'Notifications' }),
       icon: faBell,
       component: NotificationCenter
     },
     {
       id: 'support',
-      label: t('pages.financialAid.supportGuide'),
+      label: t('pages.financialAid.supportGuide', { defaultValue: 'Support Guide' }),
       icon: faQuestionCircle,
       component: SupportGuide
     }
@@ -68,9 +68,9 @@ const FinancialAid = () => {
     <div className="p-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('pages.financialAid.title')}</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('pages.financialAid.title', { defaultValue: 'Financial Aid' })}</h1>
         <p className="text-gray-600">
-          {t('pages.financialAid.subtitle')}
+          {t('pages.financialAid.subtitle', { defaultValue: 'Access schemes, loans, subsidies, alerts, and step-by-step support for farm finance.' })}
         </p>
       </div>
 

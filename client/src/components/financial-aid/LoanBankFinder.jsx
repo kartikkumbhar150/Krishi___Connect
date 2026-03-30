@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faUniversity, 
@@ -23,6 +24,8 @@ import {
  * Includes interest rates, eligibility criteria, and contact information.
  */
 const LoanBankFinder = () => {
+  const { t } = useTranslation();
+  const tf = (key, defaultValue) => t(key, { defaultValue });
   const [banks, setBanks] = useState([]);
   const [filteredBanks, setFilteredBanks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -214,7 +217,7 @@ const LoanBankFinder = () => {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
-        <span className="ml-3 text-gray-600">Loading banks and loan options...</span>
+        <span className="ml-3 text-gray-600">{tf('pages.financialAid.loanFinder.loading', 'Loading banks and loan options...')}</span>
       </div>
     );
   }
@@ -223,9 +226,9 @@ const LoanBankFinder = () => {
     <div>
       {/* Header */}
       <div className="mb-6">
-        <h2 className="text-2xl font-semibold text-gray-900 mb-2">Banks & Loan Finder</h2>
+        <h2 className="text-2xl font-semibold text-gray-900 mb-2">{tf('pages.financialAid.loanFinder.title', 'Banks & Loan Finder')}</h2>
         <p className="text-gray-600">
-          Compare agricultural loans from various banks, cooperative banks, and rural financial institutions
+          {tf('pages.financialAid.loanFinder.subtitle', 'Compare agricultural loans from various banks, cooperative banks, and rural financial institutions')}
         </p>
       </div>
 
@@ -238,7 +241,7 @@ const LoanBankFinder = () => {
               <FontAwesomeIcon icon={faSearch} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
                 type="text"
-                placeholder="Search banks..."
+                placeholder={tf('pages.financialAid.loanFinder.searchPlaceholder', 'Search banks...')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -253,11 +256,11 @@ const LoanBankFinder = () => {
               onChange={(e) => handleFilterChange('bankType', e.target.value)}
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
-              <option value="all">All Bank Types</option>
-              <option value="public">Public Sector</option>
-              <option value="private">Private Sector</option>
-              <option value="cooperative">Cooperative</option>
-              <option value="rural">Rural Bank</option>
+              <option value="all">{tf('pages.financialAid.loanFinder.bankTypes.all', 'All Bank Types')}</option>
+              <option value="public">{tf('pages.financialAid.loanFinder.bankTypes.public', 'Public Sector')}</option>
+              <option value="private">{tf('pages.financialAid.loanFinder.bankTypes.private', 'Private Sector')}</option>
+              <option value="cooperative">{tf('pages.financialAid.loanFinder.bankTypes.cooperative', 'Cooperative')}</option>
+              <option value="rural">{tf('pages.financialAid.loanFinder.bankTypes.rural', 'Rural Bank')}</option>
             </select>
           </div>
 
@@ -265,7 +268,7 @@ const LoanBankFinder = () => {
           <div>
             <input
               type="number"
-              placeholder="Max Interest %"
+              placeholder={tf('pages.financialAid.loanFinder.maxInterest', 'Max Interest %')}
               value={filters.maxInterestRate}
               onChange={(e) => handleFilterChange('maxInterestRate', e.target.value)}
               step="0.1"
@@ -280,7 +283,7 @@ const LoanBankFinder = () => {
               onChange={(e) => handleFilterChange('state', e.target.value)}
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
-              <option value="">All States</option>
+              <option value="">{tf('pages.financialAid.loanFinder.allStates', 'All States')}</option>
               <option value="Maharashtra">Maharashtra</option>
               <option value="Punjab">Punjab</option>
               <option value="Haryana">Haryana</option>
@@ -304,7 +307,7 @@ const LoanBankFinder = () => {
               }}
               className="w-full bg-gray-100 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-200"
             >
-              Clear Filters
+              {tf('pages.financialAid.loanFinder.clearFilters', 'Clear Filters')}
             </button>
           </div>
         </div>
@@ -313,7 +316,7 @@ const LoanBankFinder = () => {
       {/* Results Count */}
       <div className="mb-4">
         <p className="text-gray-600">
-          Showing {filteredBanks.length} of {banks.length} banks and loan options
+          {tf('pages.financialAid.loanFinder.results', 'Showing {{filtered}} of {{total}} banks and loan options').replace('{{filtered}}', filteredBanks.length).replace('{{total}}', banks.length)}
         </p>
       </div>
 
@@ -338,7 +341,7 @@ const LoanBankFinder = () => {
             {/* Key Details */}
             <div className="space-y-3 mb-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Interest Rate:</span>
+                <span className="text-sm text-gray-600">{tf('pages.financialAid.loanFinder.labels.interestRate', 'Interest Rate:')}</span>
                 <span className="font-medium text-green-600">
                   <FontAwesomeIcon icon={faPercentage} className="mr-1" />
                   {bank.interestRate}
@@ -346,7 +349,7 @@ const LoanBankFinder = () => {
               </div>
               
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Loan Amount:</span>
+                <span className="text-sm text-gray-600">{tf('pages.financialAid.loanFinder.labels.loanAmount', 'Loan Amount:')}</span>
                 <span className="font-medium">
                   <FontAwesomeIcon icon={faRupeeSign} className="mr-1" />
                   {(bank.minLoanAmount / 100000).toFixed(1)}L - {(bank.maxLoanAmount / 100000).toFixed(1)}L
@@ -354,12 +357,12 @@ const LoanBankFinder = () => {
               </div>
 
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Processing Fee:</span>
+                <span className="text-sm text-gray-600">{tf('pages.financialAid.loanFinder.labels.processingFee', 'Processing Fee:')}</span>
                 <span className="font-medium">{bank.processingFee}</span>
               </div>
 
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Tenure:</span>
+                <span className="text-sm text-gray-600">{tf('pages.financialAid.loanFinder.labels.tenure', 'Tenure:')}</span>
                 <span className="font-medium">
                   <FontAwesomeIcon icon={faCalendarAlt} className="mr-1" />
                   {bank.tenure}
@@ -367,14 +370,14 @@ const LoanBankFinder = () => {
               </div>
 
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Branches:</span>
+                <span className="text-sm text-gray-600">{tf('pages.financialAid.loanFinder.labels.branches', 'Branches:')}</span>
                 <span className="font-medium">{bank.branches}</span>
               </div>
             </div>
 
             {/* Features */}
             <div className="mb-4">
-              <h4 className="text-sm font-medium text-gray-800 mb-2">Key Features:</h4>
+              <h4 className="text-sm font-medium text-gray-800 mb-2">{tf('pages.financialAid.loanFinder.labels.keyFeatures', 'Key Features:')}</h4>
               <div className="flex flex-wrap gap-1">
                 {bank.features.slice(0, 3).map((feature, index) => (
                   <span key={index} className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded">
@@ -387,7 +390,7 @@ const LoanBankFinder = () => {
             {/* Special Offers */}
             {bank.specialOffers && bank.specialOffers.length > 0 && (
               <div className="mb-4">
-                <h4 className="text-sm font-medium text-gray-800 mb-2">Special Offers:</h4>
+                <h4 className="text-sm font-medium text-gray-800 mb-2">{tf('pages.financialAid.loanFinder.labels.specialOffers', 'Special Offers:')}</h4>
                 <ul className="text-xs text-gray-600 space-y-1">
                   {bank.specialOffers.slice(0, 2).map((offer, index) => (
                     <li key={index} className="flex items-start">
@@ -419,11 +422,11 @@ const LoanBankFinder = () => {
                   className="flex-1 bg-blue-600 text-white px-3 py-2 rounded-md hover:bg-blue-700 text-center text-sm flex items-center justify-center gap-1"
                 >
                   <FontAwesomeIcon icon={faExternalLinkAlt} className="w-3 h-3" />
-                  Visit Website
+                  {tf('pages.financialAid.loanFinder.visitWebsite', 'Visit Website')}
                 </a>
                 <button className="bg-green-600 text-white px-3 py-2 rounded-md hover:bg-green-700 text-sm">
                   <FontAwesomeIcon icon={faHandshake} className="mr-1" />
-                  Apply Now
+                  {tf('pages.financialAid.loanFinder.applyNow', 'Apply Now')}
                 </button>
               </div>
             </div>
@@ -435,9 +438,9 @@ const LoanBankFinder = () => {
       {filteredBanks.length === 0 && (
         <div className="text-center py-12">
           <FontAwesomeIcon icon={faUniversity} className="w-16 h-16 text-gray-300 mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No banks found</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">{tf('pages.financialAid.loanFinder.noResultsTitle', 'No banks found')}</h3>
           <p className="text-gray-600 mb-4">
-            Try adjusting your search criteria or filters to find more options.
+            {tf('pages.financialAid.loanFinder.noResultsSubtitle', 'Try adjusting your search criteria or filters to find more options.')}
           </p>
           <button
             onClick={() => {
@@ -452,7 +455,7 @@ const LoanBankFinder = () => {
             }}
             className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
           >
-            Reset Search
+            {tf('pages.financialAid.loanFinder.resetSearch', 'Reset Search')}
           </button>
         </div>
       )}
@@ -461,20 +464,20 @@ const LoanBankFinder = () => {
       <div className="mt-8 bg-gray-50 rounded-lg p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">
           <FontAwesomeIcon icon={faChartLine} className="mr-2 text-green-600" />
-          Quick Comparison Tips
+          {tf('pages.financialAid.loanFinder.tips.title', 'Quick Comparison Tips')}
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
           <div className="bg-white p-4 rounded-lg">
-            <h4 className="font-medium text-gray-800 mb-2">Interest Rates</h4>
-            <p className="text-gray-600">Cooperative banks typically offer lower rates (5.5-7.5%) compared to private banks (8.5-10%)</p>
+            <h4 className="font-medium text-gray-800 mb-2">{tf('pages.financialAid.loanFinder.tips.interestRatesTitle', 'Interest Rates')}</h4>
+            <p className="text-gray-600">{tf('pages.financialAid.loanFinder.tips.interestRatesText', 'Cooperative banks typically offer lower rates (5.5-7.5%) compared to private banks (8.5-10%)')}</p>
           </div>
           <div className="bg-white p-4 rounded-lg">
-            <h4 className="font-medium text-gray-800 mb-2">Processing Time</h4>
-            <p className="text-gray-600">Digital applications with private banks are faster, while cooperative banks may take longer but offer better local support</p>
+            <h4 className="font-medium text-gray-800 mb-2">{tf('pages.financialAid.loanFinder.tips.processingTimeTitle', 'Processing Time')}</h4>
+            <p className="text-gray-600">{tf('pages.financialAid.loanFinder.tips.processingTimeText', 'Digital applications with private banks are faster, while cooperative banks may take longer but offer better local support')}</p>
           </div>
           <div className="bg-white p-4 rounded-lg">
-            <h4 className="font-medium text-gray-800 mb-2">Additional Benefits</h4>
-            <p className="text-gray-600">Jila Sahakari banks often provide fertilizers, seeds, and direct market access along with loans</p>
+            <h4 className="font-medium text-gray-800 mb-2">{tf('pages.financialAid.loanFinder.tips.additionalBenefitsTitle', 'Additional Benefits')}</h4>
+            <p className="text-gray-600">{tf('pages.financialAid.loanFinder.tips.additionalBenefitsText', 'Jila Sahakari banks often provide fertilizers, seeds, and direct market access along with loans')}</p>
           </div>
         </div>
       </div>

@@ -67,11 +67,11 @@ const IrrigationManagement = () => {
           id: field._id,
           name: field.field_name,
           area: field.area || 0,
-          cropType: field.current_crop || 'Not specified',
-          soilType: field.soil_type || 'Unknown',
+          cropType: field.current_crop || t('pages.fieldDetail.notSpecified'),
+          soilType: field.soil_type || t('pages.fields.unknown'),
           lastIrrigation: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString(),
           nextIrrigation: new Date(Date.now() + Math.random() * 3 * 24 * 60 * 60 * 1000).toISOString(),
-          irrigationStatus: Math.random() > 0.7 ? 'active' : 'scheduled',
+          irrigationStatus: Math.random() > 0.7 ? t('pages.irrigationManagement.active') : t('pages.irrigationManagement.scheduled'),
           waterRequirement: Math.floor(field.area * 150 + Math.random() * 100) // liters per day
         }));
         setFields(mappedFields);
@@ -88,34 +88,34 @@ const IrrigationManagement = () => {
     const schedule = [
       {
         id: 1,
-        fieldName: 'North Field',
-        scheduledTime: '06:00 AM',
+        fieldName: t('pages.irrigationManagement.northField'),
+        scheduledTime: t('pages.irrigationManagement.time6am'),
         duration: '30 min',
-        status: 'completed',
+        status: t('pages.irrigationManagement.completed'),
         waterAmount: '500L'
       },
       {
         id: 2,
-        fieldName: 'South Field',
-        scheduledTime: '07:00 AM',
+        fieldName: t('pages.irrigationManagement.southField'),
+        scheduledTime: t('pages.irrigationManagement.time7am'),
         duration: '45 min',
-        status: 'active',
+        status: t('pages.irrigationManagement.active'),
         waterAmount: '750L'
       },
       {
         id: 3,
-        fieldName: 'East Field',
-        scheduledTime: '08:30 AM',
+        fieldName: t('pages.irrigationManagement.eastField'),
+        scheduledTime: t('pages.irrigationManagement.time830am'),
         duration: '35 min',
-        status: 'pending',
+        status: t('pages.irrigationManagement.pending'),
         waterAmount: '600L'
       },
       {
         id: 4,
-        fieldName: 'West Field',
-        scheduledTime: '10:00 AM',
+        fieldName: t('pages.irrigationManagement.westField'),
+        scheduledTime: t('pages.irrigationManagement.time10am'),
         duration: '40 min',
-        status: 'delayed',
+        status: t('pages.irrigationManagement.delayed'),
         waterAmount: '700L'
       }
     ];
@@ -147,7 +147,7 @@ const IrrigationManagement = () => {
 
   const startPump = (pumpId, fieldId) => {
     if (waterTankLevel < 10) {
-      alert('Water tank level too low! Please refill tank before starting irrigation.');
+      alert(t('pages.irrigationManagement.alertLowWater'));
       return;
     }
     
@@ -219,20 +219,26 @@ const IrrigationManagement = () => {
 
   const getStatusIcon = (status) => {
     switch (status) {
-      case 'completed': return faCheckCircle;
-      case 'active': return faSpinner;
-      case 'delayed': return faExclamationTriangle;
+      case t('pages.irrigationManagement.completed'): return faCheckCircle;
+      case t('pages.irrigationManagement.active'): return faSpinner;
+      case t('pages.irrigationManagement.delayed'): return faExclamationTriangle;
       default: return faClock;
     }
   };
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'completed': return 'text-green-600 bg-green-100';
-      case 'active': return 'text-blue-600 bg-blue-100';
-      case 'delayed': return 'text-red-600 bg-red-100';
+      case t('pages.irrigationManagement.completed'): return 'text-green-600 bg-green-100';
+      case t('pages.irrigationManagement.active'): return 'text-blue-600 bg-blue-100';
+      case t('pages.irrigationManagement.delayed'): return 'text-red-600 bg-red-100';
       default: return 'text-gray-600 bg-gray-100';
     }
+  };
+
+  const getPumpStatusLabel = (status) => {
+    if (status === 'running') return t('pages.irrigationManagement.active');
+    if (status === 'maintenance') return t('pages.irrigationManagement.maintenance');
+    return t('pages.irrigationManagement.idle');
   };
 
   if (loading) {
@@ -240,7 +246,7 @@ const IrrigationManagement = () => {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <FontAwesomeIcon icon={faSpinner} spin className="text-4xl text-blue-600 mb-4" />
-          <p className="text-gray-600">Loading irrigation system...</p>
+          <p className="text-gray-600">{t('pages.waterManagement.loadingIrrigation')}</p>
         </div>
       </div>
     );
@@ -255,13 +261,13 @@ const IrrigationManagement = () => {
             <div>
               <h1 className="text-2xl font-bold text-gray-900 flex items-center">
                 <FontAwesomeIcon icon={faDroplet} className="mr-3 text-blue-600" />
-                Irrigation Management
+                {t('pages.irrigationManagement.title')}
               </h1>
-              <p className="text-gray-600 mt-1">Monitor and control field irrigation systems</p>
+              <p className="text-gray-600 mt-1">{t('pages.irrigationManagement.subtitle')}</p>
             </div>
             <div className="flex items-center space-x-4">
               <div className="bg-blue-50 px-4 py-2 rounded-lg">
-                <span className="text-sm text-blue-600 font-medium">System Online</span>
+                <span className="text-sm text-blue-600 font-medium">{t('pages.irrigationManagement.systemOnline')}</span>
               </div>
             </div>
           </div>
@@ -274,7 +280,7 @@ const IrrigationManagement = () => {
           {/* Water Tank Level */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">Water Tank</h3>
+              <h3 className="text-lg font-semibold text-gray-900">{t('pages.irrigationManagement.waterTank')}</h3>
               <FontAwesomeIcon 
                 icon={getWaterLevelIcon(waterTankLevel)} 
                 className={`text-2xl ${getWaterLevelColor(waterTankLevel)}`} 
@@ -282,7 +288,7 @@ const IrrigationManagement = () => {
             </div>
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Current Level</span>
+                <span className="text-sm text-gray-600">{t('pages.irrigationManagement.currentLevel')}</span>
                 <span className="font-bold text-xl">{waterTankLevel.toFixed(1)}%</span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-3">
@@ -303,7 +309,7 @@ const IrrigationManagement = () => {
           {/* Weather Conditions */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">Weather</h3>
+              <h3 className="text-lg font-semibold text-gray-900">{t('pages.irrigationManagement.weather')}</h3>
               <FontAwesomeIcon 
                 icon={getWeatherIcon(weatherData.condition)} 
                 className="text-2xl text-yellow-500" 
@@ -311,22 +317,22 @@ const IrrigationManagement = () => {
             </div>
             <div className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Temperature</span>
+                <span className="text-sm text-gray-600">{t('pages.irrigationManagement.temperature')}</span>
                 <span className="font-medium">{weatherData.temperature.toFixed(1)}°C</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Humidity</span>
+                <span className="text-sm text-gray-600">{t('pages.irrigationManagement.humidity')}</span>
                 <span className="font-medium">{weatherData.humidity.toFixed(0)}%</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Rain Chance</span>
+                <span className="text-sm text-gray-600">{t('pages.irrigationManagement.rainChance')}</span>
                 <span className="font-medium">{weatherData.rainProbability.toFixed(0)}%</span>
               </div>
               {weatherData.rainProbability > 70 && (
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-2 mt-3">
                   <div className="flex items-center">
                     <FontAwesomeIcon icon={faCloudRain} className="text-blue-600 mr-2" />
-                    <span className="text-xs text-blue-800">Rain expected - irrigation may be delayed</span>
+                    <span className="text-xs text-blue-800">{t('pages.irrigationManagement.rainAlert')}</span>
                   </div>
                 </div>
               )}
@@ -336,10 +342,10 @@ const IrrigationManagement = () => {
           {/* Active Pumps */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">Active Pumps</h3>
+              <h3 className="text-lg font-semibold text-gray-900">{t('pages.irrigationManagement.activePumps')}</h3>
               <div className="flex items-center">
                 <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
-                <span className="text-sm text-green-600">1 Running</span>
+                <span className="text-sm text-green-600">{t('pages.irrigationManagement.running')}</span>
               </div>
             </div>
             <div className="space-y-2">
@@ -351,8 +357,8 @@ const IrrigationManagement = () => {
                 </div>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Other Pumps</span>
-                <span className="text-sm text-gray-500">Idle</span>
+                <span className="text-sm text-gray-600">{t('pages.irrigationManagement.otherPumps')}</span>
+                <span className="text-sm text-gray-500">{t('pages.irrigationManagement.idle')}</span>
               </div>
               <div className="text-xs text-gray-500 mt-3">
                 Total runtime today: 2h 15min
@@ -363,24 +369,24 @@ const IrrigationManagement = () => {
           {/* Today's Summary */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">Today's Summary</h3>
+              <h3 className="text-lg font-semibold text-gray-900">{t('pages.irrigationManagement.todaySummary')}</h3>
               <FontAwesomeIcon icon={faCalendarCheck} className="text-2xl text-green-600" />
             </div>
             <div className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Water Used</span>
-                <span className="font-medium">2,150L</span>
+                <span className="text-sm text-gray-600">{t('pages.irrigationManagement.waterUsed')}</span>
+                <span className="font-medium">{t('pages.irrigationManagement.waterUsedValue')}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Fields Irrigated</span>
-                <span className="font-medium">3 of 4</span>
+                <span className="text-sm text-gray-600">{t('pages.irrigationManagement.fieldsIrrigated')}</span>
+                <span className="font-medium">{t('pages.irrigationManagement.fieldsIrrigatedValue')}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-600">Scheduled</span>
-                <span className="font-medium">4 sessions</span>
+                <span className="text-sm text-gray-600">{t('pages.irrigationManagement.scheduled')}</span>
+                <span className="font-medium">{t('pages.irrigationManagement.scheduledSessions')}</span>
               </div>
               <div className="bg-green-50 border border-green-200 rounded-lg p-2 mt-3">
-                <span className="text-xs text-green-800">75% completion rate</span>
+                <span className="text-xs text-green-800">{t('pages.irrigationManagement.completionRate')}</span>
               </div>
             </div>
           </div>
@@ -392,8 +398,8 @@ const IrrigationManagement = () => {
           <div className="xl:col-span-2">
             <div className="bg-white rounded-lg shadow-sm border border-gray-200">
               <div className="px-6 py-4 border-b border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900">Pump Control System</h3>
-                <p className="text-sm text-gray-600">Control irrigation pumps for different field zones</p>
+                <h3 className="text-lg font-semibold text-gray-900">{t('pages.irrigationManagement.pumpControl')}</h3>
+                <p className="text-sm text-gray-600">{t('pages.irrigationManagement.controlPumps')}</p>
               </div>
               <div className="p-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -408,8 +414,8 @@ const IrrigationManagement = () => {
                             <FontAwesomeIcon icon={getPumpIcon(pump.status)} className="text-sm" />
                           </div>
                           <div className="ml-3">
-                            <h4 className="font-medium text-gray-900 capitalize">{pumpId} Pump</h4>
-                            <p className="text-sm text-gray-600 capitalize">{pump.status}</p>
+                            <h4 className="font-medium text-gray-900 capitalize">{pumpId} {t('pages.irrigationManagement.pump')}</h4>
+                            <p className="text-sm text-gray-600 capitalize">{getPumpStatusLabel(pump.status)}</p>
                           </div>
                         </div>
                         <FontAwesomeIcon icon={faMapMarkerAlt} className="text-gray-400" />
@@ -418,8 +424,8 @@ const IrrigationManagement = () => {
                       {pump.status === 'running' && (
                         <div className="bg-blue-50 rounded-lg p-3 mb-3">
                           <div className="flex justify-between items-center mb-2">
-                            <span className="text-sm font-medium text-blue-900">Running Time</span>
-                            <span className="text-sm text-blue-700">{pump.duration.toFixed(0)} minutes</span>
+                            <span className="text-sm font-medium text-blue-900">{t('pages.irrigationManagement.runningTime')}</span>
+                            <span className="text-sm text-blue-700">{pump.duration.toFixed(0)} {t('pages.irrigationManagement.minutes')}</span>
                           </div>
                           <div className="w-full bg-blue-200 rounded-full h-2">
                             <div 
@@ -440,7 +446,7 @@ const IrrigationManagement = () => {
                             className="flex-1 bg-green-600 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors flex items-center justify-center"
                           >
                             <FontAwesomeIcon icon={faPlay} className="mr-2" />
-                            Start
+                            {t('pages.irrigationManagement.start')}
                           </button>
                         )}
                         {pump.status === 'running' && (
@@ -449,7 +455,7 @@ const IrrigationManagement = () => {
                             className="flex-1 bg-red-600 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-red-700 transition-colors flex items-center justify-center"
                           >
                             <FontAwesomeIcon icon={faStop} className="mr-2" />
-                            Stop
+                            {t('pages.irrigationManagement.stop')}
                           </button>
                         )}
                         {pump.status === 'maintenance' && (
@@ -457,7 +463,7 @@ const IrrigationManagement = () => {
                             disabled
                             className="flex-1 bg-gray-300 text-gray-500 px-3 py-2 rounded-lg text-sm font-medium cursor-not-allowed"
                           >
-                            Under Maintenance
+                            {t('pages.irrigationManagement.maintenance')}
                           </button>
                         )}
                       </div>
@@ -471,8 +477,8 @@ const IrrigationManagement = () => {
           {/* Irrigation Schedule */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200">
             <div className="px-6 py-4 border-b border-gray-200">
-              <h3 className="text-lg font-semibold text-gray-900">Today's Schedule</h3>
-              <p className="text-sm text-gray-600">Planned irrigation sessions</p>
+              <h3 className="text-lg font-semibold text-gray-900">{t('pages.irrigationManagement.todaysSchedule')}</h3>
+              <p className="text-sm text-gray-600">{t('pages.irrigationManagement.plannedSessions')}</p>
             </div>
             <div className="p-6 space-y-4">
               {irrigationSchedule.map((item) => (
@@ -481,7 +487,7 @@ const IrrigationManagement = () => {
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center ${getStatusColor(item.status)}`}>
                       <FontAwesomeIcon 
                         icon={getStatusIcon(item.status)} 
-                        className={`text-sm ${item.status === 'active' ? 'animate-spin' : ''}`} 
+                        className={`text-sm ${item.status === t('pages.irrigationManagement.active') ? 'animate-spin' : ''}`} 
                       />
                     </div>
                     <div className="ml-3">
@@ -502,36 +508,36 @@ const IrrigationManagement = () => {
         {/* Field Status Table */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
           <div className="px-6 py-4 border-b border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-900">Field Irrigation Status</h3>
-            <p className="text-sm text-gray-600">Monitor water requirements and schedules for all fields</p>
+            <h3 className="text-lg font-semibold text-gray-900">{t('pages.irrigationManagement.fieldIrrigationStatus')}</h3>
+            <p className="text-sm text-gray-600">{t('pages.irrigationManagement.fieldIrrigationSubtitle')}</p>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Field Name
+                    {t('pages.irrigationManagement.fieldName')}
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Crop Type
+                    {t('pages.irrigationManagement.cropType')}
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Area (ha)
+                    {t('pages.irrigationManagement.area')}
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Water Req. (L/day)
+                    {t('pages.irrigationManagement.waterRequirement')}
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Last Irrigation
+                    {t('pages.irrigationManagement.lastIrrigation')}
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Next Irrigation
+                    {t('pages.irrigationManagement.nextIrrigation')}
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
+                    {t('pages.irrigationManagement.status')}
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
+                    {t('pages.irrigationManagement.actions')}
                   </th>
                 </tr>
               </thead>
@@ -558,7 +564,7 @@ const IrrigationManagement = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
-                        field.irrigationStatus === 'active' 
+                        field.irrigationStatus === t('pages.irrigationManagement.active') 
                           ? 'bg-green-100 text-green-800' 
                           : 'bg-yellow-100 text-yellow-800'
                       }`}>
@@ -571,11 +577,11 @@ const IrrigationManagement = () => {
                         className="text-blue-600 hover:text-blue-700 font-medium mr-3"
                       >
                         <FontAwesomeIcon icon={faEye} className="mr-1" />
-                        View
+                        {t('pages.irrigationManagement.view')}
                       </button>
                       <button className="text-green-600 hover:text-green-700 font-medium">
                         <FontAwesomeIcon icon={faPlay} className="mr-1" />
-                        Start
+                        {t('pages.irrigationManagement.start')}
                       </button>
                     </td>
                   </tr>

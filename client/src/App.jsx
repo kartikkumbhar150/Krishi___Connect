@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Layout from './components/layout/Layout';
 import Dashboard from './pages/Dashboard';
 import GovernmentDashboard from './pages/GovernmentDashboard';
@@ -27,6 +28,7 @@ import SoilLandAnalysis from './components/climate/SoilLandAnalysis'
 import WaterIrrigationAnalysis from './components/climate/WaterIrrigationAnalysis'
 
 function App() {
+  const { t } = useTranslation();
   return (
     <AuthProvider>
       <AppProvider>
@@ -268,7 +270,7 @@ function App() {
               } 
             />
             
-            <Route path="*" element={<h1>Page Not Found</h1>} />
+            <Route path="*" element={<h1>{t('errors.notFound')}</h1>} />
           </Routes>
         </Router>
         </AppProvider>

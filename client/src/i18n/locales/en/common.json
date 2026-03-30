@@ -371,7 +371,47 @@
       "banksLoans": "Banks & Loans",
       "subsidiesFreebies": "Subsidies & Freebies",
       "notifications": "Notifications",
-      "supportGuide": "Support Guide"
+      "supportGuide": "Support Guide",
+      "loanFinder": {
+        "loading": "Loading banks and loan options...",
+        "title": "Banks & Loan Finder",
+        "subtitle": "Compare agricultural loans from various banks, cooperative banks, and rural financial institutions",
+        "searchPlaceholder": "Search banks...",
+        "maxInterest": "Max Interest %",
+        "allStates": "All States",
+        "clearFilters": "Clear Filters",
+        "results": "Showing {{filtered}} of {{total}} banks and loan options",
+        "visitWebsite": "Visit Website",
+        "applyNow": "Apply Now",
+        "noResultsTitle": "No banks found",
+        "noResultsSubtitle": "Try adjusting your search criteria or filters to find more options.",
+        "resetSearch": "Reset Search",
+        "labels": {
+          "interestRate": "Interest Rate:",
+          "loanAmount": "Loan Amount:",
+          "processingFee": "Processing Fee:",
+          "tenure": "Tenure:",
+          "branches": "Branches:",
+          "keyFeatures": "Key Features:",
+          "specialOffers": "Special Offers:"
+        },
+        "bankTypes": {
+          "all": "All Bank Types",
+          "public": "Public Sector",
+          "private": "Private Sector",
+          "cooperative": "Cooperative",
+          "rural": "Rural Bank"
+        },
+        "tips": {
+          "title": "Quick Comparison Tips",
+          "interestRatesTitle": "Interest Rates",
+          "interestRatesText": "Cooperative banks typically offer lower rates (5.5-7.5%) compared to private banks (8.5-10%)",
+          "processingTimeTitle": "Processing Time",
+          "processingTimeText": "Digital applications with private banks are faster, while cooperative banks may take longer but offer better local support",
+          "additionalBenefitsTitle": "Additional Benefits",
+          "additionalBenefitsText": "Jila Sahakari banks often provide fertilizers, seeds, and direct market access along with loans"
+        }
+      }
     },
     "governmentDashboard": {
       "title": "Government Dashboard",
@@ -435,15 +475,14 @@
       "smartSuggestions": "Smart Suggestions",
       "notifications": "Notifications",
       "activeZones": "Active Zones",
+      "zonesValue": "2/4",
       "scheduledToday": "Scheduled Today",
+      "scheduledValue": "6",
       "avgSoilMoisture": "Avg Soil Moisture",
+      "moistureValue": "68%",
       "alerts": "Alerts",
-      "irrigationStarted": "Irrigation started successfully",
-      "irrigationStopped": "Irrigation stopped",
-      "scheduleUpdated": "Irrigation schedule updated",
-      "sensorWarning": "Sensor reading requires attention",
-      "systemError": "System error occurred",
-      "loadingIrrigation": "Loading irrigation system..."
+      "irrigationRecommendations": "Irrigation Recommendations",
+      "loadingSystem": "Loading irrigation system..."
     },
     "createField": {
       "title": "Create New Field",
@@ -518,7 +557,18 @@
       "active": "active",
       "pending": "pending",
       "delayed": "delayed",
-      "alertLowWater": "Water tank level too low! Please refill tank before starting irrigation."
+      "alertLowWater": "Water tank level too low! Please refill tank before starting irrigation.",
+      "fieldIrrigationStatus": "Field Irrigation Status",
+      "fieldIrrigationSubtitle": "Monitor water requirements and schedules for all fields",
+      "fieldName": "Field Name",
+      "cropType": "Crop Type",
+      "area": "Area (ha)",
+      "waterRequirement": "Water Req. (L/day)",
+      "lastIrrigation": "Last Irrigation",
+      "nextIrrigation": "Next Irrigation",
+      "status": "Status",
+      "actions": "Actions",
+      "view": "View"
     },
     "login": {
       "title": "Welcome Back",
@@ -603,25 +653,6 @@
       "registrationFailed": "Registration failed. Please try again.",
       "haveAccount": "Already have an account?",
       "signInHere": "Sign in here"
-    },
-    "waterManagement": {
-      "title": "Water Management & Irrigation Control",
-      "subtitle": "Smart irrigation system with zone-based control and automated scheduling",
-      "zoneControl": "Zone Control",
-      "schedule": "Schedule",
-      "sensors": "Sensors",
-      "history": "History",
-      "smartSuggestions": "Smart Suggestions",
-      "notifications": "Notifications",
-      "activeZones": "Active Zones",
-      "zonesValue": "2/4",
-      "scheduledToday": "Scheduled Today",
-      "scheduledValue": "6",
-      "avgSoilMoisture": "Avg Soil Moisture",
-      "moistureValue": "68%",
-      "alerts": "Alerts",
-      "irrigationRecommendations": "Irrigation Recommendations",
-      "loadingSystem": "Loading irrigation system..."
     },
     "yieldPrediction": {
       "title": "Yield Prediction",
