@@ -49,7 +49,8 @@ import {
   faCloudShowersHeavy,
   faMapMarkedAlt,
   faSearchDollar,
-  faFileInvoiceDollar
+  faFileInvoiceDollar,
+  faShieldAlt
 } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../../context/AuthContext';
 
@@ -416,6 +417,26 @@ useEffect(() => {
                         className={`w-4 h-4 md:w-5 md:h-5 ${isActive('/financial-aid') ? 'text-white' : 'text-gray-500 group-hover:text-blue-600'}`}
                       />
                       {!isCollapsed && <span className="ml-2 md:ml-3 whitespace-nowrap text-sm md:text-base">Financial Aid</span>}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/crop-insurance-suggestions"
+                      className={`flex items-center px-2 md:px-3 py-2 md:py-2.5 rounded-lg ${isCollapsed ? 'justify-center' : ''} ${
+                        isActive('/crop-insurance-suggestions')
+                          ? 'bg-blue-500 text-white font-medium shadow-sm'
+                          : 'text-gray-700 hover:bg-blue-50 hover:text-blue-700'
+                      } group transition-all duration-200 touch-manipulation`}
+                    >
+                      <FontAwesomeIcon
+                        icon={faShieldAlt}
+                        className={`w-4 h-4 md:w-5 md:h-5 ${isActive('/crop-insurance-suggestions') ? 'text-white' : 'text-gray-500 group-hover:text-blue-600'}`}
+                      />
+                      {!isCollapsed && (
+                        <span className="ml-2 md:ml-3 whitespace-nowrap text-sm md:text-base">
+                          Crop Insurance
+                        </span>
+                      )}
                     </Link>
                   </li>
                 </ul>

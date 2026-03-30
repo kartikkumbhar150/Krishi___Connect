@@ -13,7 +13,8 @@ import {
   faCloudSunRain,
   faUser,
   faSignOutAlt,
-  faBuilding
+  faBuilding,
+  faShieldAlt
 } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
 import { useAppContext } from '../../context/AppContext';
@@ -401,6 +402,14 @@ const Navbar = () => {
                 >
                   <FontAwesomeIcon icon={faMicrophone} className="mr-3 text-green-300 w-4 h-4" />
                   AI Assistant
+                </Link>
+                <Link
+                  to="/crop-insurance-suggestions"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full text-left px-5 py-3 text-white hover:bg-green-800/50 active:bg-green-800/70 block transition-colors text-sm font-medium flex items-center mobile-nav-item smooth-transition"
+                >
+                  <FontAwesomeIcon icon={faShieldAlt} className="mr-3 text-green-300 w-4 h-4" />
+                  Crop Insurance
                 </Link>
                 
                 {/* User Profile Section - Mobile */}

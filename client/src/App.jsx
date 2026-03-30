@@ -13,6 +13,7 @@ import CreateField from './pages/CreateField';
 import Fields from './pages/Fields';
 import FieldDetail from './pages/FieldDetail';
 import FinancialAid from './pages/FinancialAid';
+import CropInsuranceSuggestions from './pages/CropInsuranceSuggestions';
 import ClimateDamageClaim from './pages/ClimateDamageClaim';
 import WaterManagement from './pages/WaterManagement';
 import PlantDiseaseDetection from './pages/PlantDiseaseDetection';
@@ -71,6 +72,10 @@ function App() {
             <Route path="/crop-planning" element={wrapProtected(<CropManagement />, 'farmer')} />
             <Route path="/crop-health" element={wrapProtected(<PlantDiseaseDetection />, 'farmer')} />
             <Route path="/financial-aid" element={wrapProtected(<FinancialAid />, 'farmer')} />
+            <Route
+              path="/crop-insurance-suggestions"
+              element={wrapProtected(<CropInsuranceSuggestions />, 'farmer')}
+            />
             <Route
               path="/climate-damage-claim"
               element={wrapProtected(<ClimateDamageClaim />, 'farmer')}
