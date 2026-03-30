@@ -518,7 +518,18 @@
       "active": "active",
       "pending": "pending",
       "delayed": "delayed",
-      "alertLowWater": "Water tank level too low! Please refill tank before starting irrigation."
+      "alertLowWater": "Water tank level too low! Please refill tank before starting irrigation.",
+      "fieldIrrigationStatus": "Field Irrigation Status",
+      "fieldIrrigationSubtitle": "Monitor water requirements and schedules for all fields",
+      "fieldName": "Field Name",
+      "cropType": "Crop Type",
+      "area": "Area (ha)",
+      "waterRequirement": "Water Req. (L/day)",
+      "lastIrrigation": "Last Irrigation",
+      "nextIrrigation": "Next Irrigation",
+      "status": "Status",
+      "actions": "Actions",
+      "view": "View"
     },
     "login": {
       "title": "Welcome Back",

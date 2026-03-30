@@ -28,12 +28,6 @@ import {
 const surfaceCard =
   'rounded-3xl border border-white/60 bg-white/90 shadow-lg backdrop-blur';
 
-const predictionPeriods = [
-  { id: 'current-season', name: 'Current Season' },
-  { id: 'next-season', name: 'Next Season' },
-  { id: 'annual', name: 'Annual Forecast' }
-];
-
 const OverviewCard = ({ icon, label, value, caption }) => (
   <div className="rounded-2xl bg-white p-4 shadow">
     <div className="flex justify-between items-center">
@@ -75,7 +69,7 @@ const YieldPrediction = () => {
       setFields(mapped);
       if (mapped.length) setSelectedField(mapped[0].id);
     } catch {
-      setError('Failed to load fields');
+      setError(t('pages.yieldPrediction.failedToLoad'));
     } finally {
       setFieldsLoading(false);
     }
@@ -145,10 +139,10 @@ const YieldPrediction = () => {
       await createYieldPrediction({
         field_id: currentField.id
       });
-      setSuccessMessage('Saved!');
+      setSuccessMessage(t('pages.yieldPrediction.saved'));
       fetchSavedPredictions();
     } catch {
-      setError('Save failed');
+      setError(t('pages.yieldPrediction.saveFailed'));
     } finally {
       setSaving(false);
     }
@@ -170,7 +164,7 @@ const YieldPrediction = () => {
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold">Yield Prediction</h1>
+      <h1 className="text-2xl font-bold">{t('pages.yieldPrediction.title')}</h1>
 
       {/* Controls */}
       <div className="flex gap-4">
@@ -189,7 +183,11 @@ const YieldPrediction = () => {
           value={predictionPeriod}
           onChange={(e) => setPredictionPeriod(e.target.value)}
         >
-          {predictionPeriods.map((p) => (
+          {[
+            { id: 'current-season', name: t('pages.yieldPrediction.currentSeason') },
+            { id: 'next-season', name: t('pages.yieldPrediction.nextSeason') },
+            { id: 'annual', name: t('pages.yieldPrediction.annualForecast') }
+          ].map((p) => (
             <option key={p.id} value={p.id}>
               {p.name}
             </option>
@@ -201,34 +199,34 @@ const YieldPrediction = () => {
       <div className="grid grid-cols-3 gap-4">
         <OverviewCard
           icon={faLeaf}
-          label="Field"
+          label={t('pages.yieldPrediction.field')}
           value={currentField?.name}
-          caption={`${currentField?.area} ha`}
+          caption={`${currentField?.area} ${t('pages.yieldPrediction.hectare')}`}
         />
         <OverviewCard
           icon={faWheatAwn}
-          label="Crop"
+          label={t('pages.yieldPrediction.crop')}
           value={prediction?.cropName}
-          caption="Active crop"
+          caption={t('pages.yieldPrediction.activeCrop')}
         />
         <OverviewCard
           icon={faChartLine}
-          label="Yield"
-          value={`${prediction?.predictedYield} t/ha`}
-          caption="Prediction"
+          label={t('pages.yieldPrediction.yield')}
+          value={`${prediction?.predictedYield} ${t('pages.yieldPrediction.tPerHa')}`}
+          caption={t('pages.yieldPrediction.prediction')}
         />
       </div>
 
       {/* Prediction */}
       <div className={surfaceCard + ' p-6'}>
-        <h2 className="font-bold mb-4">Forecast</h2>
+        <h2 className="font-bold mb-4">{t('pages.yieldPrediction.forecast')}</h2>
         <div className="flex justify-between">
-          <span>{prediction?.predictedYield} t/ha</span>
+          <span>{prediction?.predictedYield} {t('pages.yieldPrediction.tPerHa')}</span>
           <span className={getTrendColor(prediction?.trend)}>
-            <FontAwesomeIcon icon={getTrendIcon(prediction?.trend)} /> Up
+            <FontAwesomeIcon icon={getTrendIcon(prediction?.trend)} /> {t('pages.yieldPrediction.up')}
           </span>
         </div>
-        <p>Range: {prediction?.minYield} - {prediction?.maxYield}</p>
+        <p>{t('pages.yieldPrediction.range')} {prediction?.minYield} {t('pages.yieldPrediction.dash')} {prediction?.maxYield}</p>
       </div>
 
       {/* Save */}
@@ -237,7 +235,7 @@ const YieldPrediction = () => {
         disabled={saving}
         className="bg-blue-600 text-white px-4 py-2 rounded"
       >
-        {saving ? 'Saving...' : 'Save Prediction'}
+        {saving ? t('pages.yieldPrediction.saving') : t('pages.yieldPrediction.savePrediction')}
       </button>
 
       {successMessage && <p className="text-green-600">{successMessage}</p>}
