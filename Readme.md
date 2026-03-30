@@ -922,3 +922,8 @@ python app.py
 ```
 
 Then open the frontend and begin with login, dashboard navigation, field selection, crop lifecycle, and prediction-oriented features.
+
+
+## Feature Guides
+
+- See `FEATURES_README.md` for a detailed feature-by-feature functional guide.

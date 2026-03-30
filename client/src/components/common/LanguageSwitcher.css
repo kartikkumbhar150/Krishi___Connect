@@ -1,122 +1,111 @@
 .language-switcher-container {
   display: flex;
   align-items: center;
-  gap: 8px;
   position: relative;
+  z-index: 60;
 }
 
-/* Language Switcher Button */
 .language-switcher-button {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
+  min-height: 40px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid #d1fae5;
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  color: #065f46;
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
-  position: relative;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(16, 185, 129, 0.15);
   white-space: nowrap;
 }
 
 .language-switcher-button:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-}
-
-.language-switcher-button:active:not(:disabled) {
-  transform: translateY(0);
-}
-
-.language-switcher-button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
+  border-color: #6ee7b7;
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.18);
+  transform: translateY(-1px);
 }
 
 .language-switcher-button.active {
-  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.5);
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
 }
 
 .language-icon {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .language-text {
-  display: inline-block;
-  font-size: 13px;
+  font-size: 12px;
+  max-width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .chevron-icon {
-  font-size: 12px;
-  transition: transform 0.3s ease;
+  font-size: 11px;
+  transition: transform 0.2s ease;
 }
 
 .chevron-icon.open {
   transform: rotate(180deg);
 }
 
-/* Dropdown Menu */
 .language-dropdown-menu {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 8px);
   right: 0;
-  margin-top: 8px;
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  min-width: 200px;
-  z-index: 1000;
-  animation: slideDownMenu 0.2s ease-out;
+  min-width: 190px;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #d1fae5;
+  box-shadow: 0 14px 35px rgba(15, 23, 42, 0.14);
   overflow: hidden;
+  animation: slideDownMenu 0.18s ease-out;
 }
 
 @keyframes slideDownMenu {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-/* Dropdown Items */
 .language-dropdown-item {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   width: 100%;
-  padding: 12px 16px;
+  padding: 10px 12px;
   border: none;
   background: transparent;
-  color: #333;
-  font-size: 14px;
+  color: #0f172a;
+  font-size: 13px;
   cursor: pointer;
-  transition: all 0.2s ease;
   text-align: left;
-  position: relative;
 }
 
 .language-dropdown-item:hover:not(.active) {
-  background-color: #f3f4f6;
+  background: #f0fdf4;
 }
 
 .language-dropdown-item.active {
-  background-color: #ede9fe;
-  color: #667eea;
-  font-weight: 600;
+  background: #ecfdf5;
+  color: #047857;
+  font-weight: 700;
 }
 
 .language-flag {
-  font-size: 18px;
-  width: 24px;
+  font-size: 16px;
+  width: 20px;
   text-align: center;
 }
 
@@ -125,16 +114,14 @@
 }
 
 .checkmark {
-  color: #667eea;
-  font-weight: bold;
-  margin-left: 8px;
+  color: #10b981;
 }
 
-/* Mobile Responsive */
 @media (max-width: 640px) {
   .language-switcher-button {
-    padding: 6px 12px;
-    font-size: 12px;
+    min-height: 36px;
+    padding: 7px 10px;
+    border-radius: 10px;
     gap: 6px;
   }
 
@@ -143,34 +130,12 @@
   }
 
   .language-dropdown-menu {
-    right: -16px;
-    min-width: 180px;
-  }
-
-  .language-dropdown-item {
-    padding: 10px 12px;
-    font-size: 13px;
-    gap: 10px;
-  }
-
-  .language-icon {
-    font-size: 14px;
-  }
-
-  .language-flag {
-    font-size: 16px;
+    min-width: 170px;
   }
 }
 
-/* Accessibility */
 .language-switcher-button:focus,
 .language-dropdown-item:focus {
-  outline: 2px solid #667eea;
+  outline: 2px solid #10b981;
   outline-offset: 2px;
 }
-
-/* Ensure proper z-index stacking */
-.language-switcher-container {
-  z-index: 100;
-}
-

@@ -1,11 +1,31 @@
 @import "tailwindcss";
 
-/* Hide scrollbar for sidebar */
+:root {
+  font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #0f172a;
+  background-color: #f1f5f9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+}
+
 .scrollbar-none {
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .scrollbar-none::-webkit-scrollbar {
-  display: none;  /* Safari and Chrome */
+  display: none;
 }
