@@ -8,8 +8,8 @@ except ImportError:
     from pymongo.objectid import ObjectId
 
 # MongoDB Configuration
-MONGODB_URI = "mongodb+srv://sujalpawar07:QyUC3cMJAmI4iKRQ@cluster0.3xyu5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-DATABASE_NAME = "vortexa_agriculture"
+MONGODB_URI = "mongodb+srv://kumbharkartik150_db_user:Mp4BkzLcWv5xiQeq@cluster0.hq9jlm5.mongodb.net/?appName=Cluster0"
+DATABASE_NAME = "agriculture"
 
 class DatabaseConfig:
     def __init__(self):
